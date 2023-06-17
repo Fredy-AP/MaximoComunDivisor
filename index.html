@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Máximo Común Divisor</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Máximo Común Divisor</h1>
+    <div class="form-group">
+      <label for="numeros">Ingresa los números separados por comas:</label>
+      <input type="text" class="form-control" id="numeros" placeholder="Ejemplo: 12, 18, 24">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="calcularMCD()">Calcular MCD</button>
+    <div class="mt-3">
+      <p><strong>Máximo Común Divisor:</strong> <span id="resultado"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function calcularMCD() {
+      var numerosString = document.getElementById("numeros").value;
+      var numeros = numerosString.split(",").map(function (num) {
+        return parseInt(num.trim(), 10);
+      });
+
+      var mcd = calcularMCDRecursivo(numeros);
+      document.getElementById("resultado").textContent = mcd;
+    }
+
+    function calcularMCDRecursivo(numeros) {
+      if (numeros.length === 2) {
+        return calcularMCD2Numeros(numeros[0], numeros[1]);
+      } else if (numeros.length > 2) {
+        var mcdParcial = calcularMCD2Numeros(numeros[0], numeros[1]);
+        var numerosRestantes = numeros.slice(2);
+        numerosRestantes.unshift(mcdParcial);
+        return calcularMCDRecursivo(numerosRestantes);
+      } else {
+        return numeros[0];
+      }
+    }
+
+    function calcularMCD2Numeros(a, b) {
+      if (b === 0) {
+        return a;
+      } else {
+        return calcularMCD2Numeros(b, a % b);
+      }
+    }
+  </script>
+</body>
+</html>
